@@ -1,0 +1,51 @@
+# запрос для получения токенов через Authorization code
+# заменить "subdomain".
+# вписать значения из интеграции
+
+curl https://subdomain.amocrm.ru/oauth2/access_token -d \
+'{"client_id":"xxx-xxx-xxx-xxx-xxx","client_secret":"xxxxxx","grant_type":"authorization_code","code":"xxxxxxxx","redirect_uri":"https://test.test/"}' \
+-H 'Content-Type:application/json' \
+-X POST
+
+# пример ответа
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+{
+  "token_type": "Bearer",
+  "expires_in": 86400,
+  "access_token": "xxxxxx",
+  "refresh_token": "xxxxx"
+}
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# запрос для обновление токенов через Refresh token
+# заменить "subdomain".
+# вписать значения client_id client_secret из авторизации, и refresh_token из ответа предыдущего запроса.
+curl https://subdomain.amocrm.ru/oauth2/access_token -d \
+'{"client_id":"xxx-xxx-xxx-xxx-xxx","client_secret":"xxxxxx","grant_type":"refresh_token","refresh_token":"xxxxxxxx","redirect_uri":"https://test.test/"}' \
+-H 'Content-Type:application/json' \
+-X POST
+
+# пример ответа
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+{
+  "token_type": "Bearer",
+  "expires_in": 86400,
+  "access_token": "xxxxxx",
+  "refresh_token": "xxxxx"
+}
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Для использование access_token 
+# заменить "subdomain".
+# вставить access_token
+curl --location --request GET 'https://subdomain.amocrm.ru/api/v4/leads/' \
+--header 'Authorization: Bearer <access_token>' \
+--header 'Cookie: user_lang=ru'
